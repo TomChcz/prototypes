@@ -22,7 +22,7 @@ int main(void)
     // generate haystack, generate index correctly by substracting #iteration from haystack size
     for(int i = MAX; i > 0; i--)
     {
-        haystack[(MAX - i)] = i;
+        haystack[MAX - i] = i;
         printf("index is %i and value is %i\n", (MAX - i), i);
     }
 
