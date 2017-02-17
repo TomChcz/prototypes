@@ -26,6 +26,7 @@ int main(void)
             
             //store sorted haystack
             int tmp = haystack[i];
+            // swap straws
             haystack[i] = haystack[i + 1];
             haystack[i + 1] = tmp;
 
