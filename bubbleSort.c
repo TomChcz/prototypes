@@ -12,12 +12,17 @@ int main(void)
 {
     // fill haystack
     int size = 6; // smaler than haystack size to avoid segmentation fault (out of bounds error)
-    int haystack[] = {5, 2, 1, 20, 60, 3, 0};
+    // worst case  int haystack[] = {60, 40, 30, 5, 4, 3, 2};
+    int haystack[] = {60, 40, 70, 80, 75, 90, 100};
+    // best case int haystack[] = {2, 3, 4, 5, 30, 40, 60};
     
-    // look in haystack
+    // initiate swap counter
+    int swapCounter;
     
-    for(int n = 0; n < size; n++)
+    // search the haystack
+    do
     {
+        swapCounter = 0;
         for(int i = 0; i < size; i++)
         {
             // check if following element bigger
@@ -30,25 +35,21 @@ int main(void)
                 // swap straws
                 haystack[i] = haystack[i + 1];
                 haystack[i + 1] = tmp;
-
-                /*  pseudocode for swap of positions in array
-                haystack[i] = haystack[i+1], haystack[i + 1] = haystack[i]
-                need to figure out, how to mark element as sorted (index at zero and start for loop by size+1?)
-                */
+                
+                swapCounter++;
             }
         }
-        
+        printf("counter %i\n", swapCounter);
     }
-
+    while(swapCounter > 0);
+    
     // print haystack values
     printf("sorted haystack: ");
+    
     for(int x = 0; x < size + 1; x++)
         {
             printf("%i ", haystack[x]);
         }
-   
-    // new line
-    printf("\n");
-    
-    
+
+        printf("\n");
 }
