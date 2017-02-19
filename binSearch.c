@@ -8,6 +8,9 @@
 #include <stdio.h>
 #include <cs50.h>
 
+// devine divider for recursion
+#define DIVIDER 2
+
 int main(void)
 {
     /* pseudocode
@@ -20,28 +23,46 @@ int main(void)
      int haystack[] = {1, 2, 3, 4, 5, 6, 7};
      // int haystack[] = {1, 2, 3, 4, 5, 6};
      
-     // search the haystack
+     // define counter for recursion
      int counter;
-
+     
+     int needle = 3;
+     
      do
      {
          counter = 0;
-         //define midpoint
 
-         if(size % 2 == 1)
+         int midpoint;
+         
+         //find midpoint
+         if(size % DIVIDER == 1)
          {
-             int midpoint = (size - 1) / 2;
-             printf("midpoint is %i\n", midpoint);
+             // define midpoint and substract 1 to get array position
+             midpoint = ((size - 1) / DIVIDER) - 1;
              printf("haystack is of odd size\n");
          }
          else
          {
-             int midpoint = size / 2;
-             printf("midpoint is %i\n", midpoint);
+             // define midpoint and substract 1 to get array position
+             midpoint = (size / DIVIDER) -1;
              printf("haystack is of even size\n");
          }
          
-         printf("haystack tmp %i\n", haystack[0]);
+        // search the haystack
+        if(haystack[midpoint] == needle)
+        {
+            printf("needle found!\n");
+        }
+        else
+        {
+            // counter++;
+            // TODO if higher or lower
+        } 
+         
+         
+         
+         
+         
      }
      while(counter > 0);
 }
