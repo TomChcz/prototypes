@@ -43,20 +43,20 @@ int main(int argc, string argv[])
 
     do
     {
+        //calculate midpoint
+        if((start + end) % DIVIDER == 1)
+        {
+            // calculate midpoint for odd size haystack
+            midpoint = ((start + end - 1) / DIVIDER);
+            printf("midpoint is %i\n", midpoint);
+        }
+        else
+        {
+            // calculate midpoint for even size haystack
+            midpoint = ((start + end) / DIVIDER);
+            printf("midpoint is %i\n", midpoint);
+        }        
         
-    //calculate midpoint
-    if((start + end) % DIVIDER == 1)
-    {
-        // define midpoint for odd size haystack and substract 1 to get array position
-        midpoint = ((start + end - 1) / DIVIDER);
-        printf("midpoint is %i\n", midpoint);
-    }
-    else
-    {
-        // define midpoint for even size haystack and substract 1 to get array position
-        midpoint = ((start + end) / DIVIDER);
-        printf("midpoint is %i\n", midpoint);
-    }        
         // search the haystack
         if(haystack[midpoint] == needle)
         {
@@ -82,4 +82,5 @@ int main(int argc, string argv[])
     while(end >= start);
     
     printf("needle not found :(\n");
+    return 0;
 }
