@@ -8,10 +8,12 @@
 #include <stdio.h>
 #include <cs50.h>
 
+// declare swap function
+
 int main(void)
 {
     // fill haystack
-    int size = 6; // smaler than haystack size to avoid segmentation fault (out of bounds error)
+    int size = 7; // smaler than haystack size to avoid segmentation fault (out of bounds error)
     // worst case  int haystack[] = {60, 40, 30, 5, 4, 3, 2};
     int haystack[] = {60, 40, 70, 80, 75, 90, 100};
     // best case int haystack[] = {2, 3, 4, 5, 30, 40, 60};
@@ -25,18 +27,20 @@ int main(void)
         swapCounter = 0;
         for(int i = 0; i < size; i++)
         {
-            // check if following element bigger
-            if(haystack[i] > haystack [i + 1])
-            {
-                // swap: need to create a function for this
-            
-                //store sorted haystack
-                int tmp = haystack[i];
-                // swap straws
-                haystack[i] = haystack[i + 1];
-                haystack[i + 1] = tmp;
+            // prevent array overflow
+            if(i < (size - 1))
+            {            
+                // check if following element bigger
+                if(haystack[i] > haystack[i + 1])
+                {
+                    //store sorted haystack
+                    int tmp = haystack[i];
+                    // swap straws
+                    haystack[i] = haystack[i + 1];
+                    haystack[i + 1] = tmp;
                 
-                swapCounter++;
+                    swapCounter++;
+                }
             }
         }
         printf("counter %i\n", swapCounter);
@@ -46,10 +50,12 @@ int main(void)
     // print haystack values
     printf("sorted haystack: ");
     
-    for(int x = 0; x < size + 1; x++)
+    for(int x = 0; x < size; x++)
         {
             printf("%i ", haystack[x]);
         }
 
         printf("\n");
 }
+
+
