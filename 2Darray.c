@@ -42,13 +42,25 @@ int main(int argc, string argv[])
         return 2;
     }
     
+    // initiate tiles
+    
+    int number_of_tiles = ((d * d) -1);
+    
+    int tiles[number_of_tiles];
+    
+    // generate tiles
+    for(int x = 0; x < number_of_tiles; x++)
+    {
+        tiles[x] = x + 1;
+    }
+    
+    
     // draw the board
-
     for(int i = 0; i < d; i++)
     {
         for(int j = 0; j < d; j++)
         {
-        printf("#");            
+            printf("%i", tiles[j]);            
         }
         printf("\n");
     }
