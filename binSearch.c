@@ -20,13 +20,7 @@ int main(int argc, string argv[])
     
     // get needle
     int needle = atoi(argv[1]);
-    
-    /* pseudocode
-     * look at midpoint (modulus/2 -1 for even array size), if match exit, if higher, look to the left, if lower, look to the right
-     * repat until array portion of size 1
-     * end is higher than start
-     */
-     
+
     // fil the haystack
     int haystack[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
