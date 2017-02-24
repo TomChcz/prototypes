@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <cs50.h>
 
-// devine divider for recursion
+// define divider for recursion
 #define DIVIDER 2
 
 int main(int argc, string argv[])
@@ -30,9 +30,6 @@ int main(int argc, string argv[])
     // fil the haystack
     int haystack[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 
-    // define midpoint variable
-    int midpoint;
-    
     // define start of the array
     int start = 0;
     
@@ -40,6 +37,9 @@ int main(int argc, string argv[])
     int end = 14;
 
     printf("needle is %i\n", needle);
+
+    // define midpoint variable
+    int midpoint;
 
     do
     {
@@ -83,4 +83,17 @@ int main(int argc, string argv[])
     
     printf("needle not found :(\n");
     return 0;
+}
+
+// bool search(int value, int values[], int n)
+
+bool search(int value, int values[], int n)
+{
+    // Your implementation must return false immediately if n is non-positive. !!
+    
+    
+    // TODO: implement a searching algorithm
+    
+
+    return false;
 }
