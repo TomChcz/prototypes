@@ -84,16 +84,3 @@ int main(int argc, string argv[])
     printf("needle not found :(\n");
     return 0;
 }
-
-// bool search(int value, int values[], int n)
-
-bool search(int value, int values[], int n)
-{
-    // Your implementation must return false immediately if n is non-positive. !!
-    
-    
-    // TODO: implement a searching algorithm
-    
-
-    return false;
-}
