@@ -43,32 +43,35 @@ int main(int argc, string argv[])
     }
     
     //initiate tiles
-    int tiles =  d * d;
+    int tiles =  (d * d - 1 );
     
     
     // generate board
+    
     for(int x = 0; x < d; x++)
     {
         for(int y = 0; y < d; y++)
         {
             board[x][y] = tiles;
             tiles--;
-        }
-    }
-    
-//    board[1][2] = 8;
-//    board[2][3] = 9;
+            
+            // print board except last slot
+            if(tiles >= 0)
+            {
+            printf("%i", board[x][y]);                
+            }
+            
+            // print blank slot
+            else
+            {
+                printf(" ");
+            }
 
-    
-    // draw the board
-    for(int i = 0; i < d; i++)
-    {
-        for(int j = 0; j < d; j++)
-        {
-            printf("%i", board[i][j]);
-            printf("|");
+            printf(" ");
         }
         printf("\n");
     }
+
+
 
 }
