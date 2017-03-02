@@ -1,9 +1,9 @@
 /**
- * 2Darray.c
+ * gof_board.c
  * 
  * drawes gaming board for Game of 15
  * 
- * usage ./2Darray d
+ * usage ./gof_board d
  * 
  * board size is limited to DIM_MIN & DIM_MAX
  * 
@@ -37,46 +37,65 @@ int main(int argc, string argv[])
     // check dimensions
     if(d < DIM_MIN || d > DIM_MAX)
     {
-        printf("board can only be of between: MIN %i x %i and MAX %i x %i\n", DIM_MIN, DIM_MIN, DIM_MAX, DIM_MAX);
+        printf("Board can only be of between: MIN %i x %i and MAX %i x %i\n", DIM_MIN, DIM_MIN, DIM_MAX, DIM_MAX);
         return 2;
     }
     
     //initiate tiles
     int tiles =  (d * d - 1 );
     
-    // generate board except last empty slot
+    // initiate board except last empty slot
 
     for(int x = 0; x < d; x++)
     {
         for(int y = 0; y < d; y++)
         {
-            // generate tiles
+            // make sure last tile is not initiated (left blank)
             if(tiles > 0)
             {
                 board[x][y] = tiles;
                 tiles--;
             }
+        }
+    }
+    
+    // swap last two tiles for even board dimensions
+    if(d % 2 != 1)
+    {
+        int tmp = board[d - 1][d - 2];
+        board[d - 1][d - 2] = board[d - 1][d - 3];
+        board[d - 1][d - 3] = tmp;
+    }
 
+    // draw the board
+    for(int row = 0; row < d; row++)
+    {
+        for(int column = 0; column < d; column++)
+        {
             //print padding for single digit tiles
-            if(board[x][y] < 10)
+            if(board[row][column] < 10)
             {
                 printf(" ");
             }
             
             // print board
-            if(board[x][y] == 0)
+            if(board[row][column] == 0)
             {
                 printf("_");
             }
             else
             {
-                printf("%i", board[x][y]);
+                printf("%i", board[row][column]);
             }
 
             printf("|");
+
         }
-        
-    printf("\n");
+    // new row
+    printf("\n");        
     }
+
+
+    
 
 }
