@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <cs50.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 // constants
 #define DIM_MIN 3
@@ -28,6 +29,7 @@ void clear(void);
 void init(int b);
 void draw(int b);
 bool move(int tile);
+
 
 // board
 int board[DIM_MAX][DIM_MAX];
@@ -55,7 +57,6 @@ int main(int argc, string argv[])
     
     while(true)
     {
-
         draw(d);
         
         // get tile to move from user
@@ -74,23 +75,20 @@ int main(int argc, string argv[])
 // end main
 }
 
-
-
-    
 void init(int b)
 {
     //initiate tiles except last tile that has to remain empty
     int tiles =  (b * b - 1 );
     
-    // fgenerate tiles line by line, column by column
-    for(int x = 0; x < b; x++)
+    // generate tiles line by line, column by column
+    for(int row = 0; row < b; row++)
     {
-        for(int y = 0; y < b; y++)
+        for(int column = 0; column < b; column++)
         {
             // make sure last tile is not initiated (left blank)
             if(tiles > 0)
             {
-                board[x][y] = tiles;
+                board[row][column] = tiles;
                 tiles--;
             }
         }
@@ -114,21 +112,16 @@ void draw(int b)
     {
         for(int column = 0; column < b; column++)
         {
-            //print padding for single digit tiles
-            if(board[row][column] < 10)
-            {
-                printf(" ");
-            }
-            
             // print board except final empty tile (empty array value)
             if(board[row][column] == 0)
             {
                 // print _ for final empty tile
-                printf("_");
+                printf(" _");
             }
             else
             {
-                printf("%i", board[row][column]);
+               // print each tile, blank space for single digit numbers
+                printf("%2i", board[row][column]);
             }
 
             // print tile divider
@@ -145,21 +138,53 @@ bool move(int tile)
 {
     int row;
     int column;
-    
-    
+
     // find the tile on the board
+    
     for(row = 0; row < d; row++)
     {
         for(column = 0; column < d; column++)
         {
             if(board[row][column] == tile)
-            {
-                break;
-            }
+                {
+                    break;
+                }
+        }
+        
+        if(board[row][column] == tile)
+        {
+            break;
         }
     }
+
+    int row_blank;
+    int column_blank;
+
+    // find the tile on the board
     
+    for(row_blank = 0; row_blank < d; row_blank++)
+    {
+        for(column_blank = 0; column_blank < d; column_blank++)
+        {
+            if(board[row_blank][column_blank] == tile)
+                {
+                    break;
+                }
+        }
+        
+        if(board[row_blank][column_blank] == tile)
+        {
+            break;
+        }
+    }
+
+    
+    
+    
+    
+    printf("row: %i, column: %i\n", row, column);
+    printf("row_blank: %i, column_blank: %i\n", row_blank, column_blank);
     return 0;
 
-
 }
+
