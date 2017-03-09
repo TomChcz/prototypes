@@ -20,6 +20,7 @@
 // constants
 #define DIM_MIN 3
 #define DIM_MAX 9
+#define EMPTY_TILE 99
 
 // dimensions
 int d;
@@ -100,7 +101,10 @@ void init(int b)
         int tmp = board[b - 1][b - 2];
         board[b - 1][b - 2] = board[b - 1][b - 3];
         board[b - 1][b - 3] = tmp;
-    }    
+    } 
+    
+    // initiate empty tile
+    board[b - 1][b - 1] = EMPTY_TILE;
 
 // end init
 }
@@ -113,9 +117,9 @@ void draw(int b)
         for(int column = 0; column < b; column++)
         {
             // print board except final empty tile (empty array value)
-            if(board[row][column] == 0)
+            if(board[row][column] == EMPTY_TILE)
             {
-                // print _ for final empty tile
+                // print _ for final empty tile - should be automated for numbers with 3 decimals and more
                 printf(" _");
             }
             else
@@ -160,28 +164,23 @@ bool move(int tile)
     int row_blank;
     int column_blank;
 
-    // find the tile on the board
+    // find the empty tile on the board
     
     for(row_blank = 0; row_blank < d; row_blank++)
     {
         for(column_blank = 0; column_blank < d; column_blank++)
         {
-            if(board[row_blank][column_blank] == tile)
+            if(board[row_blank][column_blank] == EMPTY_TILE)
                 {
                     break;
                 }
         }
         
-        if(board[row_blank][column_blank] == tile)
+        if(board[row_blank][column_blank] == EMPTY_TILE)
         {
             break;
         }
     }
-
-    
-    
-    
-    
     printf("row: %i, column: %i\n", row, column);
     printf("row_blank: %i, column_blank: %i\n", row_blank, column_blank);
     return 0;
