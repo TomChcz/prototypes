@@ -17,7 +17,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-// constants
+// fixeds
 #define DIM_MIN 3
 #define DIM_MAX 9
 #define EMPTY_TILE 99
@@ -30,8 +30,6 @@ void clear(void);
 void init(int b);
 void draw(int b);
 bool move(int tile);
-void swap(int*, int*);
-
 
 // board
 int board[DIM_MAX][DIM_MAX];
@@ -184,67 +182,64 @@ bool move(int tile)
             break;
         }
     }
-    
-    // print for debugging
-    printf("tile to move is here: row: %i, column: %i\n", row, column);
-    printf("empty space is here: row_blank: %i, column_blank: %i\n", row_blank, column_blank);
-    
-    
-    // compare if tile borders empty tile
-    /* pseudocode:
-     *
-     * if sum of row-blank and column-blank equals to 1 or -1, then swap, else return false
-     *
-     */
-     
-    // print distance for debugging
-    printf("rows how far is tile from blank %i\n", row - row_blank);
-    printf("columns how far is tile from blank %i\n", column - column_blank);
-    
-    //check for selected tile borders blank tile
+
+    //calculate distance of tile and blank space
     int row_distance = row - row_blank;
     int column_distance = column - column_blank;
 
-    if((row_distance + column_distance) == -1 || (row_distance + column_distance) == 1)
+    // check whether tile and blank space neighbour correctly
+    
+    if(row_distance == 0)
     {
-        if(row_distance !=0)
+        if(column_distance == -1 || column_distance == 1)
         {
-            
-            printf("tile position before swap holds value %i\n", board[row][column]);
-            
-            int swap_tmp = board[row_blank][column];
-            board[row_blank][column] = board[row][column];
-            board[row][column] = swap_tmp;
-            
-            printf("tile position after swap holds value %i\n", board[row][column]);        
-
-        }
-        else
-        {
-
-            printf("tile position before swap holds value %i\n", board[row][column]);
+            // move diagonally
             int swap_tmp = board[row][column_blank];
             board[row][column_blank] = board[row][column];
             board[row][column] = swap_tmp;
-            
-            printf("tile position after swap holds value %i\n", board[row][column]);      
+            return true;
         }
+    }
+    else if(column_distance == 0)
+    {
+        if(row_distance == -1 || row_distance == 1)
+        {
+            // move vertically
+            int swap_tmp = board[row_blank][column];
+            board[row_blank][column] = board[row][column];
+            board[row][column] = swap_tmp;
+            return true;
+        }
+        
+    }
+
+    /* old version - bug with row distance
+    
+    if((row_distance + column_distance) == -1 || (row_distance + column_distance) == 1)
+    {
+        printf("swap something\n");
+        // check whether move vertically or diagonally
+        if(row_distance !=0)
+        {
+            // move vertically
+            int swap_tmp = board[row_blank][column];
+            board[row_blank][column] = board[row][column];
+            board[row][column] = swap_tmp;
+        }
+        else
+        {
+            // move diagonally
+            int swap_tmp = board[row][column_blank];
+            board[row][column_blank] = board[row][column];
+            board[row][column] = swap_tmp;
+        }
+        // tile moved sucesfully
         return true;
     }
+    */
     
-    
-    
+    // cant move tile
     return false;
-    
+
 // end move
-}
-
-void swap(int *prev, int *next)
-{
-    int tmp = *next;
-    *next = *prev;
-    *prev = tmp;
-    
-
-    
 }
