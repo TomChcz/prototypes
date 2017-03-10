@@ -4,7 +4,7 @@
  * drawes gaming board for Game of 15 with function call
  * to init and draw board with move tile functionality
  * 
- * usage ./gof_board_func d
+ * usage ./gof_board_move_func d
  * 
  * board size is limited to DIM_MIN & DIM_MAX
  * 
@@ -30,6 +30,7 @@ void clear(void);
 void init(int b);
 void draw(int b);
 bool move(int tile);
+void swap(int*, int*);
 
 
 // board
@@ -103,7 +104,7 @@ void init(int b)
         board[b - 1][b - 3] = tmp;
     } 
     
-    // initiate empty tile
+    // initiate last empty tile
     board[b - 1][b - 1] = EMPTY_TILE;
 
 // end init
@@ -144,17 +145,18 @@ bool move(int tile)
     int column;
 
     // find the tile on the board
-    
     for(row = 0; row < d; row++)
     {
         for(column = 0; column < d; column++)
         {
+            // end search if found
             if(board[row][column] == tile)
-                {
-                    break;
-                }
+            {
+                break;
+            }
         }
         
+        // end search if found
         if(board[row][column] == tile)
         {
             break;
@@ -165,25 +167,84 @@ bool move(int tile)
     int column_blank;
 
     // find the empty tile on the board
-    
     for(row_blank = 0; row_blank < d; row_blank++)
     {
         for(column_blank = 0; column_blank < d; column_blank++)
         {
+            // end search if found
             if(board[row_blank][column_blank] == EMPTY_TILE)
-                {
-                    break;
-                }
+            {
+                break;
+            }
         }
         
+        // end search if found
         if(board[row_blank][column_blank] == EMPTY_TILE)
         {
             break;
         }
     }
-    printf("row: %i, column: %i\n", row, column);
-    printf("row_blank: %i, column_blank: %i\n", row_blank, column_blank);
-    return 0;
+    
+    // print for debugging
+    printf("tile to move is here: row: %i, column: %i\n", row, column);
+    printf("empty space is here: row_blank: %i, column_blank: %i\n", row_blank, column_blank);
+    
+    
+    // compare if tile borders empty tile
+    /* pseudocode:
+     *
+     * if sum of row-blank and column-blank equals to 1 or -1, then swap, else return false
+     *
+     */
+     
+    // print distance for debugging
+    printf("rows how far is tile from blank %i\n", row - row_blank);
+    printf("columns how far is tile from blank %i\n", column - column_blank);
+    
+    //check for selected tile borders blank tile
+    int row_distance = row - row_blank;
+    int column_distance = column - column_blank;
 
+    if((row_distance + column_distance) == -1 || (row_distance + column_distance) == 1)
+    {
+        if(row_distance !=0)
+        {
+            
+            printf("tile position before swap holds value %i\n", board[row][column]);
+            
+            int swap_tmp = board[row_blank][column];
+            board[row_blank][column] = board[row][column];
+            board[row][column] = swap_tmp;
+            
+            printf("tile position after swap holds value %i\n", board[row][column]);        
+
+        }
+        else
+        {
+
+            printf("tile position before swap holds value %i\n", board[row][column]);
+            int swap_tmp = board[row][column_blank];
+            board[row][column_blank] = board[row][column];
+            board[row][column] = swap_tmp;
+            
+            printf("tile position after swap holds value %i\n", board[row][column]);      
+        }
+        return true;
+    }
+    
+    
+    
+    return false;
+    
+// end move
 }
 
+void swap(int *prev, int *next)
+{
+    int tmp = *next;
+    *next = *prev;
+    *prev = tmp;
+    
+
+    
+}
