@@ -63,7 +63,7 @@ int main(int argc, string argv[])
         draw(d);
         
         // check for win
-        if (won())
+        if(won())
         {
             printf("ftw!\n");
             break;
@@ -243,7 +243,6 @@ bool move(int tile)
             board[row_tile][column_tile] = swap_tmp;
             return true;
         }
-        
     }
 
     // cant move tile
