@@ -20,7 +20,10 @@
 // fixeds
 #define DIM_MIN 3
 #define DIM_MAX 9
-#define EMPTY_TILE 99
+#define EMPTY_TILE 0
+
+// board
+int board[DIM_MAX][DIM_MAX];
 
 // dimensions
 int d;
@@ -30,9 +33,6 @@ void clear(void);
 void init(int b);
 void draw(int b);
 bool move(int tile);
-
-// board
-int board[DIM_MAX][DIM_MAX];
 
 int main(int argc, string argv[])
 {
@@ -53,10 +53,12 @@ int main(int argc, string argv[])
         return 2;
     }
     
+    // initialize the board
     init(d);
     
     while(true)
     {
+        // draw the board in current state
         draw(d);
         
         // get tile to move from user
@@ -91,6 +93,12 @@ void init(int b)
                 board[row][column] = tiles;
                 tiles--;
             }
+           
+            // initiate last empty tile
+            else if(tiles == 0)
+            {
+                board[row][column] = EMPTY_TILE;                
+            }
         }
     }
     
@@ -102,9 +110,6 @@ void init(int b)
         board[b - 1][b - 3] = tmp;
     } 
     
-    // initiate last empty tile
-    board[b - 1][b - 1] = EMPTY_TILE;
-
 // end init
 }
     
@@ -139,30 +144,36 @@ void draw(int b)
 
 bool move(int tile)
 {
-    int row;
-    int column;
+    int row_tile = 0;
+    int column_tile = 0;
+    int found_tile = 0;
 
     // find the tile on the board
-    for(row = 0; row < d; row++)
+    for(row_tile = 0; row_tile < d; row_tile++)
     {
-        for(column = 0; column < d; column++)
+        for(column_tile = 0; column_tile < d; column_tile++)
         {
             // end search if found
-            if(board[row][column] == tile)
+            if(board[row_tile][column_tile] == tile)
             {
+                printf("tile inside found at %i, %i\n", row_tile, column_tile);
+                found_tile = 1;
                 break;
             }
         }
         
         // end search if found
-        if(board[row][column] == tile)
+        if(found_tile == 1)
         {
             break;
         }
     }
+    
+    printf("tile outside loop found at %i, %i\n", row_tile, column_tile);
 
-    int row_blank;
-    int column_blank;
+    int row_blank = 0;
+    int column_blank = 0;
+    int found_blank = 0;
 
     // find the empty tile on the board
     for(row_blank = 0; row_blank < d; row_blank++)
@@ -172,31 +183,34 @@ bool move(int tile)
             // end search if found
             if(board[row_blank][column_blank] == EMPTY_TILE)
             {
+                printf("blank tile inside found at %i, %i\n", row_blank, column_blank);
+                found_blank = 1;
                 break;
             }
         }
         
         // end search if found
-        if(board[row_blank][column_blank] == EMPTY_TILE)
+        if(found_blank == 1)
         {
             break;
         }
     }
+    
+    printf("blank tile outside loop found at %i, %i\n", row_blank, column_blank);
 
     //calculate distance of tile and blank space
-    int row_distance = row - row_blank;
-    int column_distance = column - column_blank;
+    int row_distance = row_tile - row_blank;
+    int column_distance = column_tile - column_blank;
 
     // check whether tile and blank space neighbour correctly
-    
     if(row_distance == 0)
     {
         if(column_distance == -1 || column_distance == 1)
         {
             // move diagonally
-            int swap_tmp = board[row][column_blank];
-            board[row][column_blank] = board[row][column];
-            board[row][column] = swap_tmp;
+            int swap_tmp = board[row_tile][column_blank];
+            board[row_tile][column_blank] = board[row_tile][column_tile];
+            board[row_tile][column_tile] = swap_tmp;
             return true;
         }
     }
@@ -205,9 +219,9 @@ bool move(int tile)
         if(row_distance == -1 || row_distance == 1)
         {
             // move vertically
-            int swap_tmp = board[row_blank][column];
-            board[row_blank][column] = board[row][column];
-            board[row][column] = swap_tmp;
+            int swap_tmp = board[row_blank][column_tile];
+            board[row_blank][column_tile] = board[row_tile][column_tile];
+            board[row_tile][column_tile] = swap_tmp;
             return true;
         }
         
