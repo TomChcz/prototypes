@@ -4,7 +4,7 @@
  * drawes gaming board for Game of 15 with function call
  * to init and draw board with move tile functionality
  * 
- * usage ./gof_board_move_func d
+ * usage ./gof_all d
  * 
  * board size is limited to DIM_MIN & DIM_MAX
  * 
@@ -40,7 +40,7 @@ int main(int argc, string argv[])
     // ensure proper usage
     if(argc != 2)
     {
-        printf("usage: ./gof_board_move_func d\n");
+        printf("usage: ./gof_all d\n");
         return 1;
     }
     
