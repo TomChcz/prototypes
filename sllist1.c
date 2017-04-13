@@ -2,7 +2,7 @@
  *                                                  *
  * Single linked list in c                          *
  *                                                  *
- * usage ./sllist1                                  *
+ * usage ./sllist2                                  *
  *                                                  *
  ****************************************************/
 
@@ -40,12 +40,13 @@ int main(void)
     root = create(6);
     
     // insert new node to the list
-    insert(root, 7);
+    root = insert(root, 7);
     
     // insert another node to the list
-    insert(root, 8);
+    root = insert(root, 8);
     
-    insert(root, 155);
+    // insert another node to the list
+    root = insert(root, 155);
     
     // search the list
     if(search(root, 6) == true)
@@ -156,12 +157,10 @@ sllnode* insert(sllnode* head, int n)
         current->value = n;
         
         // pointer now points where head points
-        current->next = head->next;
-        
-        printf("pointer of current node is %p\n", current->next);
-        
+        current->next = head;
+
         // link the head to link to following node (or null)
-        head->next = current;
+        head = current;
         
         return current;
     }
@@ -183,6 +182,8 @@ void print(sllnode* head)
     {
         //print node coordinates
         printf("Node %i address: %p\n", counter, head);
+        printf("Node %i value is: %i\n", counter, head->value);
+        printf("Node %i points to: %p\n", counter, head->next);
         
         // move to next node
         head = head->next;
