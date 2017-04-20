@@ -318,30 +318,36 @@ void fileSave(dllnode* head)
     {
         // open file for writing
         FILE *outfile = fopen("nodes.csv", "w");
-
-        // traverse node
-        dllnode* trav = head;
-        
-        while(trav != NULL)
+        if(outfile == NULL)
         {
-            // write node to file
-            fwrite(trav->string, strlen(trav->string), 1, outfile);
-            
-            // save csv delimiter
-            if(trav->next != NULL)
-            {
-                fputc(',', outfile);
-            }
-            
-            // move to the next node in the list
-            trav = trav->next;
+            fprintf(stderr, "\nFile for writing could not be opened\n");
         }
+        else
+        {
+            // traverse node
+            dllnode* trav = head;
+            
+            while(trav != NULL)
+            {
+                // write node to file
+                fwrite(trav->string, strlen(trav->string), 1, outfile);
+                
+                // save csv delimiter
+                if(trav->next != NULL)
+                {
+                    fputc(',', outfile);
+                }
+                
+                // move to the next node in the list
+                trav = trav->next;
+            }
         
-        // close file
-        fclose(outfile);
-        
-        // prevent memory leak
-        free(trav);
+            // close file
+            fclose(outfile);
+            
+            // prevent memory leak
+            free(trav);
+        }
     }
     
 // end fileSave
@@ -383,12 +389,13 @@ dllnode* deleteNode(dllnode* head, char* s)
                         head->next->prev = NULL;
                     }
                     
-                    // returns pointer to next node (if pointed to) or NULL if there is no following pointer
+                    // change the root pointer to next node
                     rootAnchor = head->next;
                     
                     // delete node
                     free(head);
                     
+                    // return pointer to next node (new head)
                     return rootAnchor;
 
                 }
